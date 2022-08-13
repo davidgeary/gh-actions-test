@@ -28,7 +28,7 @@ jobs:
 
       - name: Update assemblyinfo to ${{steps.get-tag.outputs.tag}}
         id: setversion
-        uses: secondbounce/assembly-version/set-version@v1
+        uses: secondbounce/assembly-version/set-version@v1.1
         with:
           filename: 'GlobalAssemblyInfo.cs'
           directory: './'
