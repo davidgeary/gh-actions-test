@@ -28,7 +28,7 @@ jobs:
 
       - name: Update assemblyinfo to ${{steps.get-tag.outputs.tag}}
         id: setversion
-        uses: berglie/assembly-version/set-buildnumber@v1
+        uses: secondbounce/assembly-version/set-buildnumber@v1
         with:
           filename: 'GlobalAssemblyInfo.cs'
           directory: './'
