@@ -31,7 +31,7 @@ jobs:
         uses: secondbounce/assembly-version/set-version@v1.1
         with:
           filename: 'GlobalAssemblyInfo.cs'
-          directory: './'
+          directory: '.\properties'
           version: ${{steps.get-tag.outputs.tag}}
           recursive: false
 
