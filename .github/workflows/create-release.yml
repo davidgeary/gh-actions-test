@@ -48,11 +48,9 @@ jobs:
         run: nuget restore ${{ env.SOLUTION_NAME }}
 
       - name: Build solution
-        run: |
-          echo ${{ env.SOLUTION_NAME }} /p:platform="${{ env.PLATFORM }}" /p:configuration="${{ env.CONFIGURATION }}"
-          #msbuild.exe ${{ env.SOLUTION_NAME }} /p:platform="${{ env.PLATFORM }}" /p:configuration="${{ env.CONFIGURATION }}"
+        run: msbuild.exe ${{ env.SOLUTION_NAME }} /p:platform="${{ env.PLATFORM }}" /p:configuration="${{ env.CONFIGURATION }}"
 
-      #- name: Create Github release
-      #  uses: softprops/action-gh-release@v1
-      #  with:
-      #    files: ./bin/Release/**
+      - name: Create Github release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./bin/Release/**
