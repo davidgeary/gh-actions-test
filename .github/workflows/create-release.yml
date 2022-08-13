@@ -1,0 +1,38 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Get current tag
+        id: get-tag
+        uses: dawidd6/action-get-tag@v1
+        with:
+          strip_v: true
+
+      - name: Update assemblyinfo
+        id: setversion
+        uses: berglie/assembly-version/set-buildnumber@v1
+        with:
+          filename: 'GlobalAssemblyInfo.cs'
+          directory: './'
+          buildnumber: ${{steps.get-tag.outputs.tag}}
+          recursive: false
+          
+# TODO: build the app
+
+      - name: Create Github release
+        uses: softprops/action-gh-release@v1
+        #with:
+        #  files: Release.txt
