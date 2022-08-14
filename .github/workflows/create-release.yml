@@ -28,11 +28,11 @@ jobs:
 
       - name: Update assemblyinfo to ${{steps.get-tag.outputs.tag}}
         id: setversion
-        uses: secondbounce/assembly-version/set-version@v1.1
+        uses: secondbounce/assemblyinfo-update/set-version@v1
         with:
-          filename: 'GlobalAssemblyInfo.cs'
-          directory: '.\properties'
           version: ${{steps.get-tag.outputs.tag}}
+          directory: '.\properties'
+          filename: 'GlobalAssemblyInfo.cs'
           recursive: false
 
       - name: Set up MSBuild
