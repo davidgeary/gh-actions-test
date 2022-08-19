@@ -13,47 +13,44 @@ env:
   CONFIGURATION: 'Release'
 
 jobs:
-  build:
+  build-release:
     runs-on: windows-latest
 
     steps:
-      #- name: Check out source code
-      #  uses: actions/checkout@v3
+      - name: Check out source code
+        uses: actions/checkout@v3
 
-      #- name: Get current tag
-      #  id: get-tag
-      #  uses: dawidd6/action-get-tag@v1
-      #  with:
-      #    strip_v: true
+      - name: Get current tag
+        id: get-tag
+        uses: dawidd6/action-get-tag@v1
+        with:
+          strip_v: true
 
-      #- name: Update assemblyinfo to ${{steps.get-tag.outputs.tag}}
-      #  id: setversion
-      #  uses: secondbounce/assemblyinfo-update/set-version@v1
-      #  with:
-      #    version: ${{steps.get-tag.outputs.tag}}
-      #    directory: '.\properties'
-      #    filename: 'GlobalAssemblyInfo.cs'
-      #    recursive: false
+      - name: Update assemblyinfo to ${{steps.get-tag.outputs.tag}}
+        id: setversion
+        uses: secondbounce/assemblyinfo-update/set-version@v1
+        with:
+          version: ${{steps.get-tag.outputs.tag}}
+          directory: '.\properties'
+          filename: 'GlobalAssemblyInfo.cs'
+          recursive: false
 
-      #- name: Set up MSBuild
-      #  uses: microsoft/setup-msbuild@v1
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v1
 
-      #- name: Set up NuGet
-      #  uses: NuGet/setup-nuget@v1.0.5
+      - name: Set up NuGet
+        uses: NuGet/setup-nuget@v1.0.5
         
-      #- name: Navigate to workspace
-      #  run: cd $GITHUB_WORKSPACE
+      - name: Navigate to workspace
+        run: cd $GITHUB_WORKSPACE
 
-      #- name: Restore packages
-      #  run: nuget restore ${{ env.SOLUTION_NAME }}
+      - name: Restore packages
+        run: nuget restore ${{ env.SOLUTION_NAME }}
 
-      #- name: Build solution
-      #  run: msbuild.exe ${{ env.SOLUTION_NAME }} /p:platform="${{ env.PLATFORM }}" /p:configuration="${{ env.CONFIGURATION }}"
+      - name: Build solution
+        run: msbuild.exe ${{ env.SOLUTION_NAME }} /p:platform="${{ env.PLATFORM }}" /p:configuration="${{ env.CONFIGURATION }}" /m
 
-      #- name: Create Github release
-      #  uses: softprops/action-gh-release@v1
-      #  with:
-      #    files: ./bin/Release/**
-
-      - name: Display the refs
-        run: echo "GITHUB_BASE_REF=$env:GITHUB_BASE_REF -- GITHUB_HEAD_REF=$env:GITHUB_HEAD_REF -- GITHUB_REF=$env:GITHUB_REF -- GITHUB_REF_NAME=$env:GITHUB_REF_NAME"
+      - name: Create Github release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./bin/Release/**
